@@ -7,8 +7,8 @@ const Table = ({ keyForTableRows, tableRows, tableColumn }) => {
     return _.get(data, col.path);
   };
   return (
-    <div className="table-responsive">
-      <table className="table card-table table-vcenter text-nowrap datatable">
+    <div>
+      <table className="table table-striped table-sm">
         <thead>
           <tr>
             {tableColumn.map((col) => (

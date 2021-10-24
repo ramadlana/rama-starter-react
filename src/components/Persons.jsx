@@ -30,25 +30,25 @@ class Person extends React.Component {
     {
       columnName: "Action",
       componentAsPath: (data) => (
-        <td className="text-end">
-          <span className="dropdown">
+        <div className="btn-group btn-group-sm">
+          <button
+            type="button"
+            className="btn btn-info dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Action
+          </button>
+          <div className="dropdown-menu">
             <button
-              className="btn dropdown-toggle align-text-top"
-              data-bs-boundary="viewport"
-              data-bs-toggle="dropdown"
+              className="dropdown-item "
+              onClick={() => this.handleDelete(data)}
             >
-              Actions
+              Delete
             </button>
-            <div className="dropdown-menu dropdown-menu-end">
-              <button
-                className="dropdown-item"
-                onClick={() => this.handleDelete(data)}
-              >
-                Delete
-              </button>
-            </div>
-          </span>
-        </td>
+          </div>
+        </div>
       ),
     },
   ];
@@ -97,13 +97,33 @@ class Person extends React.Component {
 
   render() {
     return (
-      <div className="col-12">
+      <div className="col-xl-12">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Persons</h3>
-          </div>
+            <div className="card-actions float-right">
+              <div className="dropdown show">
+                <a href="#!" data-toggle="dropdown" data-display="static">
+                  <i
+                    className="align-middle"
+                    data-feather="more-horizontal"
+                  ></i>
+                </a>
 
-          <div className="card-body border-bottom py-3">
+                <div className="dropdown-menu dropdown-menu-right">
+                  <a className="dropdown-item" href="#!">
+                    Action
+                  </a>
+                  <a className="dropdown-item" href="#!">
+                    Another action
+                  </a>
+                </div>
+              </div>
+            </div>
+            <h5 className="card-title mb-0">Persons Page</h5>
+          </div>
+          {/* BODY of MAIN BAR HERE */}
+          <div className="card-body">
+            This is Persons Components
             <div className="d-flex">
               <div className="text-muted">
                 Show
@@ -124,7 +144,7 @@ class Person extends React.Component {
               <div className="ms-auto text-muted md-2">
                 Search By:
                 <div className="ms-2 d-inline-block">
-                  <select class="form-select form-select-sm">
+                  <select className="form-select form-select-sm">
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -140,84 +160,12 @@ class Person extends React.Component {
                 </div>
               </div>
             </div>
-            <br />
             {/* Pass Data into Table */}
             <Table
               keyForTableRows="_id"
               tableColumn={this.tableColumnData}
               tableRows={this.state.tableRowsData}
             ></Table>
-          </div>
-          <div className="card-footer d-flex align-items-center">
-            <div className="card-footer d-flex align-items-center">
-              <p className="m-0 text-muted">
-                Showing <span>1</span> to <span>8</span> of <span>16</span>{" "}
-                entries
-              </p>
-              <ul className="pagination m-0 ms-auto">
-                <li className="page-item disabled">
-                  <button
-                    className="page-link"
-                    tabIndex={-1}
-                    aria-disabled="true"
-                  >
-                    {/* Download SVG icon from http://tabler-icons.io/i/chevron-left */}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <polyline points="15 6 9 12 15 18" />
-                    </svg>
-                    prev
-                  </button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link">1</button>
-                </li>
-                <li className="page-item active">
-                  <button className="page-link">2</button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link">3</button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link">4</button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link">5</button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link">
-                    next{" "}
-                    {/* Download SVG icon from http://tabler-icons.io/i/chevron-right */}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <polyline points="9 6 15 12 9 18" />
-                    </svg>
-                  </button>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
