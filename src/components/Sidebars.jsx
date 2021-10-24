@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
+const Sidebars = () => {
   return (
     <div className="container-fluid">
       <button
@@ -12,7 +12,7 @@ const Navbar = () => {
         <span className="navbar-toggler-icon" />
       </button>
       <h1 className="navbar-brand navbar-brand-autodark">
-        <a href=".">
+        <NavLink className="nav-link" aria-current="page" to="/">
           <img
             src="./static/logo-white.svg"
             width={110}
@@ -20,7 +20,7 @@ const Navbar = () => {
             alt="Tabler"
             className="navbar-brand-image"
           />
-        </a>
+        </NavLink>
       </h1>
 
       <div className="collapse navbar-collapse" id="navbar-menu">
@@ -56,15 +56,15 @@ const Navbar = () => {
                 {/* Download SVG icon from http://tabler-icons.io/i/home */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-3d-cube-sphere"
+                  className="icon icon-tabler icon-tabler-3d-cube-sphere"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  stroke-width="2"
+                  strokeWidth="2"
                   stroke="currentColor"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M6 17.6l-2 -1.1v-2.5"></path>
@@ -138,4 +138,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Sidebars;
