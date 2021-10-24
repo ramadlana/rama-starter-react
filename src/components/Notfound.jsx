@@ -1,4 +1,4 @@
-const notfound = () => {
+const NotFound = () => {
   return (
     <div className="col-12">
       <div className="card">
@@ -11,4 +11,4 @@ const notfound = () => {
   );
 };
 
-export default notfound;
+export default NotFound;

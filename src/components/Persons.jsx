@@ -5,30 +5,7 @@ import Table from "./common/Table";
 
 class Person extends React.Component {
   state = {
-    tableRowsData: [
-      {
-        _id: "6172b1f7a46167c53279a03a",
-        name: "Angga Juliantoro",
-        address: "Babakan Madang",
-        phone: 8133344191,
-        divisionId: {
-          _id: "6172a0f7a46167c53279a02b",
-          divisionName: "SALES",
-        },
-        __v: 0,
-      },
-      {
-        _id: "6172b1f7a46167c53279a03x",
-        name: "Bambang Kentolet",
-        address: "Babakan Madang",
-        phone: 8133344191,
-        divisionId: {
-          _id: "6172a0f7a46167c53279a02b",
-          divisionName: "SALES",
-        },
-        __v: 0,
-      },
-    ],
+    tableRowsData: [],
     maxPerPage: 10,
     currentPage: 1,
   };
@@ -125,35 +102,45 @@ class Person extends React.Component {
           <div className="card-header">
             <h3 className="card-title">Persons</h3>
           </div>
+
           <div className="card-body border-bottom py-3">
             <div className="d-flex">
               <div className="text-muted">
                 Show
                 <div className="mx-2 d-inline-block">
                   <input
-                    type="text"
+                    type="number"
                     name="maxPerPage"
                     className="form-control form-control-sm"
                     defaultValue={10}
-                    size={3}
+                    size={1}
                     aria-label="count per Page"
                     onChange={(e) => this.handleChange(e)}
                   />
                 </div>
                 entries
               </div>
-              <div className="ms-auto text-muted">
-                Search:
+
+              <div className="ms-auto text-muted md-2">
+                Search By:
+                <div className="ms-2 d-inline-block">
+                  <select class="form-select form-select-sm">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
                 <div className="ms-2 d-inline-block">
                   <input
                     type="text"
+                    placeholder="text to search here...."
                     className="form-control form-control-sm"
                     aria-label="Search invoice"
                   />
                 </div>
               </div>
             </div>
-
+            <br />
             {/* Pass Data into Table */}
             <Table
               keyForTableRows="_id"
@@ -161,7 +148,7 @@ class Person extends React.Component {
               tableRows={this.state.tableRowsData}
             ></Table>
           </div>
-          <div classname="card-footer d-flex align-items-center">
+          <div className="card-footer d-flex align-items-center">
             <div className="card-footer d-flex align-items-center">
               <p className="m-0 text-muted">
                 Showing <span>1</span> to <span>8</span> of <span>16</span>{" "}

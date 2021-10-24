@@ -1,9 +1,11 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router";
+
+// Component Lvl 1 Import
 import Home from "./components/Home";
 import Sidebars from "./components/Sidebars";
 import Person from "./components/Persons";
-import notfound from "./components/Notfound";
+import NotFound from "./components/Notfound";
 
 class App extends React.Component {
   date = 2021;
@@ -33,7 +35,7 @@ class App extends React.Component {
                 {/* SPA START HERE */}
                 <Switch>
                   <Route path="/persons" exact component={Person}></Route>
-                  <Route path="/notfound" exact component={notfound}></Route>
+                  <Route path="/notfound" exact component={NotFound}></Route>
                   <Route path="/home" exact component={Home}></Route>
                   <Redirect from="/" exact to="/home"></Redirect>
                   <Redirect to="/notfound"></Redirect>
