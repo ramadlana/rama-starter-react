@@ -10,7 +10,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        {/* <Login></Login> */}
         <aside className="navbar navbar-vertical navbar-expand-lg navbar-dark">
           <Sidebars></Sidebars>
         </aside>
@@ -31,6 +30,7 @@ class App extends React.Component {
           <div className="page-body">
             <div className="container-fluid">
               <div className="row row-deck row-cards">
+                {/* SPA START HERE */}
                 <Switch>
                   <Route path="/persons" exact component={Person}></Route>
                   <Route path="/notfound" exact component={notfound}></Route>
