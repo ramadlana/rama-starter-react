@@ -10,7 +10,7 @@ const Table = ({ keyForTableRows, tableRows, tableColumn }) => {
     <div>
       <table className="table table-striped table-sm">
         <thead>
-          <tr>
+          <tr key="aa">
             {tableColumn.map((col) => (
               <th key={col.path}>{col.columnName}</th>
             ))}
