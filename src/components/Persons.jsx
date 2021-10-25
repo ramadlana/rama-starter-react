@@ -12,6 +12,7 @@ const apiToken =
 class Person extends React.Component {
   state = {
     tableRowsData: [],
+    // Default value searchBy must be filled for searching
     searchBy: "name",
     searchQuery: "",
     maxPerPage: 10,
