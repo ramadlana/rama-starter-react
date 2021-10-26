@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router";
 import Home from "./Home";
 import NotFound from "./Notfound";
 import Person from "./Persons";
+import PersonDetail from "./PersonDetail";
 
 const Contents = () => {
   return (
@@ -11,6 +12,7 @@ const Contents = () => {
         <div className="container-fluid">
           <div className="row row-deck row-cards">
             <Switch>
+              <Route path="/persons/:id" component={PersonDetail}></Route>
               <Route path="/persons" exact component={Person}></Route>
               <Route path="/notfound" exact component={NotFound}></Route>
               <Route path="/home" exact component={Home}></Route>

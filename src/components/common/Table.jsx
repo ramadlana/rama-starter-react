@@ -9,6 +9,15 @@ class Table extends React.Component {
     return _.get(data, col.path);
   };
 
+  loader = () => {
+    if (this.props.isLoading)
+      return (
+        <div class="progress progress-sm">
+          <div class="progress-bar progress-bar-indeterminate"></div>
+        </div>
+      );
+  };
+
   render() {
     const {
       keyForTableRows,
@@ -17,7 +26,9 @@ class Table extends React.Component {
       handleMaxPerPage,
       handlePagination,
       handleSearch,
+      errMessage,
     } = this.props;
+
     return (
       <div>
         <div className="d-flex">
@@ -55,6 +66,7 @@ class Table extends React.Component {
                         {col.columnName}
                       </option>
                     );
+                  return null;
                 })}
               </select>
             </div>
@@ -72,29 +84,47 @@ class Table extends React.Component {
             </div>
           </div>
         </div>
-
-        <table className="table table-striped table-sm mt-3">
-          <thead>
-            <tr>
-              {tableColumn.map((col) => {
-                return <th key={col.id}>{col.columnName}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {tableRows.map((data) => (
-              <tr key={data[keyForTableRows]}>
-                {tableColumn.map((col) => (
-                  <td key={col.id}>{this.renderCell(data, col)}</td>
-                ))}
+        {this.loader()}
+        <div className="table-responsive">
+          <table className="table card-table table-vcenter text-nowrap datatable mt-3">
+            <thead>
+              <tr>
+                {tableColumn.map((col) => {
+                  return <th key={col.id}>{col.columnName}</th>;
+                })}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {tableRows.map((data) => (
+                <tr key={data[keyForTableRows]}>
+                  {tableColumn.map((col) => (
+                    <td key={col.id}>{this.renderCell(data, col)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {errMessage && (
+          <div className="alert alert-warning alert-dismissible" role="alert">
+            <div className="d-flex">
+              <div />
+              <div>
+                <h4 className="alert-title">Uh oh, something went wrong</h4>
+                <div className="text-muted">{errMessage}</div>
+              </div>
+            </div>
+            <button
+              href="#!"
+              className="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="close"
+            ></button>
+          </div>
+        )}
         <div className="card-footer d-flex align-items-center">
-          <p className="m-0 text-muted">
-            Showing <span>1</span> to <span>8</span> of <span>16</span> entries
-          </p>
           <ul className="pagination m-0 ms-auto">
             <li className="page-item">
               <button
@@ -120,26 +150,17 @@ class Table extends React.Component {
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <polyline points="15 6 9 12 15 18" />
                 </svg>
-                prev
+                prev Data |
               </button>
             </li>
-            <li className="page-item active">
-              <button value={1} className="page-link">
-                1
-              </button>
-            </li>
-            <li className="page-item">
-              <button value={2} className="page-link">
-                2
-              </button>
-            </li>
+
             <li className="page-item">
               <button
                 className="page-link"
                 value={1}
                 onClick={(e) => handlePagination(e.currentTarget.value)}
               >
-                next{" "}
+                next Data{" "}
                 {/* Download SVG icon from http://tabler-icons.io/i/chevron-right */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

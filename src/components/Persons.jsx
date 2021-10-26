@@ -1,6 +1,7 @@
 import axios from "axios";
 import _ from "lodash";
 import React from "react";
+import { Link } from "react-router-dom";
 import Table from "./common/Table";
 
 // params for Axios
@@ -18,6 +19,8 @@ class Person extends React.Component {
     maxPerPage: 10,
     currentPage: 1,
     sortBy: "",
+    errMessage: "",
+    isLoading: true,
   };
 
   tableColumnData = [
@@ -25,6 +28,11 @@ class Person extends React.Component {
       id: "id-col",
       columnName: "Name",
       path: "name",
+      componentAsPath: (data) => (
+        <Link to={{ pathname: `/persons/${data._id}`, data: data }}>
+          <span class="badge bg-blue-lt">{data.name}</span>
+        </Link>
+      ),
       searchAble: true,
     },
     {
@@ -50,25 +58,25 @@ class Person extends React.Component {
       columnName: "Action",
       searchAble: false,
       componentAsPath: (data) => (
-        <div className="btn-group btn-group-sm">
-          <button
-            type="button"
-            className="btn btn-info dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Action
-          </button>
-          <div className="dropdown-menu">
+        <td className="text-end">
+          <span className="dropdown">
             <button
-              className="dropdown-item "
-              onClick={() => this.handleDelete(data)}
+              className="btn btn-sm dropdown-toggle align-text-top btn-pill"
+              data-bs-boundary="viewport"
+              data-bs-toggle="dropdown"
             >
-              Delete
+              Actions
             </button>
-          </div>
-        </div>
+            <div className="dropdown-menu dropdown-menu-end">
+              <button
+                className="dropdown-item "
+                onClick={() => this.handleDelete(data)}
+              >
+                Delete
+              </button>
+            </div>
+          </span>
+        </td>
       ),
     },
   ];
@@ -91,8 +99,18 @@ class Person extends React.Component {
   };
 
   async axiosCall() {
-    const { data } = await axios.request(this.axiosParams);
-    return data.message.data;
+    try {
+      // befaore call axios set is loading to true and reset errMessage
+      this.setState({ isLoading: true, errMessage: "" });
+      // call axios
+      const { data } = await axios.request(this.axiosParams);
+      // set state loading to done
+      this.setState({ isLoading: false });
+      return data.message.data;
+    } catch (error) {
+      this.setState({ isLoading: false });
+      return null;
+    }
   }
 
   // START REUSABLE FUNC
@@ -107,8 +125,10 @@ class Person extends React.Component {
     const value = e;
     this.setState({ maxPerPage: value });
     this.axiosParams.data.maxPerPage = value;
-    const newData = await this.axiosCall();
-    this.setState({ tableRowsData: newData });
+    const fetchedData = await this.axiosCall();
+    if (!fetchedData)
+      return this.setState({ errMessage: "Error loading data from db" });
+    this.setState({ tableRowsData: fetchedData });
   };
 
   handlePagination = async (cur) => {
@@ -122,9 +142,11 @@ class Person extends React.Component {
     // assign axios params with new value
     this.axiosParams.data.currentPage = copyState.currentPage;
     // call server using modified axios params
-    const newData = await this.axiosCall();
+    const fetchedData = await this.axiosCall();
+    if (!fetchedData)
+      return this.setState({ errMessage: "Error loading data from db" });
     // push to new dataset table
-    this.setState({ tableRowsData: newData });
+    this.setState({ tableRowsData: fetchedData });
   };
 
   handleSearch = async (inputName, val) => {
@@ -132,18 +154,28 @@ class Person extends React.Component {
     this.setState({ [inputName]: val });
     if (inputName == "searchQuery") {
       this.axiosParams.data.searchQuery = val;
+      // reset current Page to page one if search
+      this.axiosParams.data.currentPage = 1;
 
       // call server using modified axios params
-      const newData = await this.axiosCall();
+      const fetchedData = await this.axiosCall();
+      if (!fetchedData)
+        return this.setState({ errMessage: "Error loading data from db" });
       // push to new dataset table
-      this.setState({ tableRowsData: newData });
+      this.setState({ tableRowsData: fetchedData });
     }
   };
 
   // Load Init Table Data Component did Mount
   async componentDidMount() {
     const dataTable = await this.axiosCall();
+    if (!dataTable)
+      return this.setState({ errMessage: "Error loading data from db" });
     this.setState({ tableRowsData: dataTable });
+  }
+
+  async componentDidUpdate() {
+    console.log("component updated");
   }
 
   render() {
@@ -164,6 +196,8 @@ class Person extends React.Component {
               handleMaxPerPage={this.handleMaxPerPage}
               handlePagination={this.handlePagination}
               handleSearch={this.handleSearch}
+              errMessage={this.state.errMessage}
+              isLoading={this.state.isLoading}
             ></Table>
           </div>
         </div>

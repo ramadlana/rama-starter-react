@@ -17,7 +17,7 @@ const Sidebars = () => {
           <h1 className="navbar-brand navbar-brand-autodark">
             <a href=".">
               <img
-                src="./static/logo-white.svg"
+                src="/static/logo-white.svg"
                 width={110}
                 height={32}
                 alt="Tabler"

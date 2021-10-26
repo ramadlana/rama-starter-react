@@ -8,7 +8,7 @@ const Navbartop = () => {
           <div className="row align-items-center">
             <div className="col">
               {/* Page pre-title */}
-              <h2 className="page-title">Fluid vertical layout</h2>
+              <h2 className="page-title">Starterkit v1.0.0</h2>
             </div>
             {/* Page title actions */}
             {/* You can add modal here */}
