@@ -150,9 +150,9 @@ class Person extends React.Component {
   };
 
   handleSearch = async (inputName, val) => {
-    if (inputName == "searchBy") this.axiosParams.data.searchBy = val;
+    if (inputName === "searchBy") this.axiosParams.data.searchBy = val;
     this.setState({ [inputName]: val });
-    if (inputName == "searchQuery") {
+    if (inputName === "searchQuery") {
       this.axiosParams.data.searchQuery = val;
       // reset current Page to page one if search
       this.axiosParams.data.currentPage = 1;
